@@ -3,36 +3,28 @@ const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 
 const shemaQuery = require("./shemaGraph/shema");
+const {
+  UserContorllers,
+  FindUserController,
+  CreateUserController,
+} = require("./contorllers");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-const users = [{ id: 1, username: "Vitya", age: 30 }];
-
-const newUser = (input) => {
-  const id = Date.now();
-
-  return {
-    id,
-    ...input,
-  };
-};
-
 const root = {
-  getAllUsers: () => {
-    return users;
+  getAllUsers: async () => {
+    return await UserContorllers();
   },
 
-  getUser: ({ id }) => {
-    return users.find((user) => user.id === id);
+  getUser: async ({ id }) => {
+    return await FindUserController(id);
   },
 
-  createUser: ({ input }) => {
-    const user = newUser(input);
-    users.push(user);
-    return user;
+  createUser: async ({ input }) => {
+    return await CreateUserController(input);
   },
 };
 
@@ -45,6 +37,4 @@ app.use(
   })
 );
 
-app.listen(5000, () => {
-  console.log("Server run on 5000 port!");
-});
+module.exports = app;

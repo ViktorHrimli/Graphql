@@ -4,8 +4,10 @@ const shemaQuery = buildSchema(`
 
 type User {
     id: ID
-    username: String
-    age: Int
+    user: String
+    tweets: String
+    followers: String
+    avatar: String
     posts: [Post]
 }
 
@@ -17,8 +19,10 @@ type Post {
 
 input UserInput {
     id: ID
-    username: String!
-    age: Int!
+    user: String
+    tweets: String
+    followers: String
+    avatar: String
     posts: [PostInput]
 }
 
